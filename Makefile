@@ -3,8 +3,9 @@ EXEC = raytracing
 all: $(EXEC)
 
 CC ?= gcc
+
 CFLAGS = \
-	-std=gnu99 -Wall -O0 -g
+	-std=gnu99 -Wall -O0 -g 
 LDFLAGS = \
 	-lm
 
@@ -13,7 +14,6 @@ PROF_FLAGS = -pg
 CFLAGS += $(PROF_FLAGS)
 LDFLAGS += $(PROF_FLAGS) 
 endif
-
 OBJS := \
 	objects.o \
 	raytracing.o \
