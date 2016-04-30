@@ -18,7 +18,7 @@
 /* @param t t distance
  * @return 1 means hit, otherwise 0
  */
-typedef struct ct_sum
+typedef struct raydata
 {
     uint8_t *pixels;
     color background_color;
@@ -486,7 +486,6 @@ void raytracing(uint8_t *pixels, color background_color,
     int n;
     calculateBasisVectors(u,v,w,view);
     color object_color = { 0.0, 0.0, 0.0 };
-
     data *input=(data *) malloc(sizeof(data)*12);
     for(n=0;n<12;n++){
     (input+n)->pixels=pixels;
@@ -510,33 +509,11 @@ void raytracing(uint8_t *pixels, color background_color,
     }
     pthread_t *id=(pthread_t *) malloc(sizeof(pthread_t)*12);
     /* calculate u, v, w */
-    pthread_create(id+0,NULL,(void *)part1,(input+0));
-    pthread_create(id+1,NULL,(void *)part1,(input+1));
-    pthread_create(id+2,NULL,(void *)part1,(input+2));
-    pthread_create(id+3,NULL,(void *)part1,(input+3));
-    pthread_create(id+4,NULL,(void *)part1,(input+4));
-    pthread_create(id+5,NULL,(void *)part1,(input+5));
-    pthread_create(id+6,NULL,(void *)part1,(input+6));
-    pthread_create(id+7,NULL,(void *)part1,(input+7));
-    pthread_create(id+8,NULL,(void *)part1,(input+8));
-    pthread_create(id+9,NULL,(void *)part1,(input+9));
-    pthread_create(id+10,NULL,(void *)part1,(input+10));
-    pthread_create(id+11,NULL,(void *)part1,(input+11));
+    for(n=0;n<12;n++)
+    pthread_create(id+n,NULL,(void *)part1,(input+n));
 
-
-    pthread_join(id[0],NULL);
-    pthread_join(id[1],NULL);
-    pthread_join(id[2],NULL);
-    pthread_join(id[3],NULL);
-    pthread_join(id[4],NULL);
-    pthread_join(id[5],NULL);
-    pthread_join(id[6],NULL);
-    pthread_join(id[7],NULL);
-    pthread_join(id[8],NULL);
-    pthread_join(id[9],NULL);
-    pthread_join(id[10],NULL);
-    pthread_join(id[11],NULL);
-
+    for(n=0;n<12;n++)
+    pthread_join(id[n],NULL);
 
 }
 void * part1(data *input){
