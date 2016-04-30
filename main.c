@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <time.h>
-
+#include <unistd.h>
 #include "primitives.h"
 #include "raytracing.h"
 
@@ -33,6 +33,7 @@ static double diff_in_second(struct timespec t1, struct timespec t2)
 
 int main()
 {
+    printf("pid: %d\n", getpid());
     uint8_t *pixels;
     light_node lights = NULL;
     rectangular_node rectangulars = NULL;
